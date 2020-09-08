@@ -75,6 +75,7 @@ def mess_view_response(s, response):
 for event in longpoll.listen():
     if (event.type == VkBotEventType.MESSAGE_NEW):
         response = event.object['text']
+        response = response.lower()
         id = event.obj['peer_id']
         while True:
             try:
@@ -129,18 +130,21 @@ for event in longpoll.listen():
                         response_1 = code
                         s = s - 1
                         break
+
                 filename = 'replicas.txt'
                 myfile = open(filename, mode='r', encoding='UTF-8')
                 json_data = json.load(myfile)
                 for i in json_data:
-                    s1 += 1
-                    for i1 in i:
-                        for i2 in (mess_view(s1, i1)):
-                            if i2 == response:
-                                msg = mess_view_response(s1, i1)
-                                sms(id, random.choice(msg))
-                            else:
-                                continue
+                    try:
+                        s1 += 1
+                        for i1 in i:
+                            for i2 in (mess_view(s1, i1)):
+                                if i2 == response:
+                                    msg = mess_view_response(s1, i1)
+                                    sms(id, random.choice(msg))
+                                    break
+                    except:
+                        break
                 break
             except:
                 continue
