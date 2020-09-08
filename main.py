@@ -10,9 +10,9 @@ import json
 s = -12
 s1 = -1
 code = '140401'
-main_token = 'd67f83db79197faed7c707a243fa66e7e8b02c7d3de626ff29b83eb816396983cac11adb5b7d6b576a1d6'
+main_token = 'ed495695fc5bf798f4fbb7d5d9b87446b1e304080cac053a4540a6c9075f19fd8f6347ed8988b5491be2a'
 vk_session = vk_api.VkApi(token = main_token)
-longpoll = VkBotLongPoll(vk_session, '198179927')
+longpoll = VkBotLongPoll(vk_session, '198259825')
 vk = vk_session.get_api()
 response_1 = 'f'
 def sms(id, msg):
@@ -122,7 +122,7 @@ for event in longpoll.listen():
                         response_2 = response_1
                         response_1 = response
                     elif response != 'back' and response != 'ответ' and response_1 == 'ответ':
-                        replic(response_2, response)
+                        replic_res(response_2, response)
                         sms(id, 'Ответ добавлен')
                         response_1 = 'f'
                         break
@@ -130,27 +130,6 @@ for event in longpoll.listen():
                         response_1 = code
                         s = s - 1
                         break
-
-                filename = 'replicas.txt'
-                myfile = open(filename, mode='r', encoding='UTF-8')
-                json_data = json.load(myfile)
-                for i in json_data:
-                    try:
-                        s1 += 1
-                        for i1 in i:
-                            for i2 in (mess_view(s1, i1)):
-                                if i2 == response:
-                                    msg = mess_view_response(s1, i1)
-                                    sms(id, random.choice(msg))
-                                    break
-                    except:
-                        break
                 break
             except:
                 continue
-
-
-
-
-
-
